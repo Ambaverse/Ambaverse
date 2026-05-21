@@ -321,12 +321,7 @@ function Hero({ palette }) {
 // ===== MARQUEE =====
 function Marquee() {
   const items = [
-    'NOW BUILDING · NEW WORK INCOMING',
-    'COLLABORATIONS Q3 / 2026',
-    'SACRAMENTO · CALIFORNIA',
-    'RUNTIME-NATIVE WORK',
-    'PEN PLOTTER · WEBGL · SHADER · PRINT',
-    'NEW DROP — SOON',
+    'CONSTRUCTION IN PROGRESS. LAUNCHING ON JUNE 15TH 2026',
   ];
   return (
     <div className="marquee">
