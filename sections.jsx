@@ -59,33 +59,6 @@ function Nav({ theme = 'light', setTheme = () => {} }) {
             style={{ height: 26, width: 'auto', display: 'block', borderRadius: 6 }}
           />
         </a>
-        <a
-          href="https://www.instagram.com/spaciotemporality"
-          target="_blank"
-          rel="noopener noreferrer"
-          data-cursor="hover"
-          data-cursor-label="INSTAGRAM →"
-          aria-label="Open @spaciotemporality on Instagram"
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: 7,
-            marginLeft: 10,
-            opacity: 0.7,
-            color: 'var(--ink)',
-            textDecoration: 'none',
-            transition: 'opacity .2s ease',
-          }}
-          onMouseEnter={(e) => e.currentTarget.style.opacity = '1'}
-          onMouseLeave={(e) => e.currentTarget.style.opacity = '0.7'}
-        >
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-            <rect x="3" y="3" width="18" height="18" rx="5" />
-            <circle cx="12" cy="12" r="4" />
-            <circle cx="17.5" cy="6.5" r="0.9" fill="currentColor" stroke="none" />
-          </svg>
-          <span>@spaciotemporality</span>
-        </a>
       </div>
       <ul>
         <li><a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} data-cursor="text">Home</a></li>
@@ -127,7 +100,31 @@ function Nav({ theme = 'light', setTheme = () => {} }) {
             </svg>
           )}
         </button>
-        <span style={{ background: 'var(--ink)', color: 'var(--bg)', padding: '2px 8px' }}>OPEN FOR COLLABORATIONS</span>
+        <span aria-hidden="true" style={{ width: 1, height: 18, background: 'var(--ink)', opacity: 0.4 }} />
+        <a
+          href="https://www.instagram.com/spaciotemporality"
+          target="_blank"
+          rel="noopener noreferrer"
+          data-cursor="hover"
+          data-cursor-label="INSTAGRAM →"
+          aria-label="Open @spaciotemporality on Instagram"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 7,
+            background: 'var(--ink)',
+            color: 'var(--bg)',
+            padding: '3px 10px',
+            textDecoration: 'none',
+          }}
+        >
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="5" />
+            <circle cx="12" cy="12" r="4" />
+            <circle cx="17.5" cy="6.5" r="0.9" fill="currentColor" stroke="none" />
+          </svg>
+          <span>@spaciotemporality</span>
+        </a>
       </div>
     </nav>
   );
