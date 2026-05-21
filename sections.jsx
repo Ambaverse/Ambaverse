@@ -176,7 +176,7 @@ function Hero({ palette }) {
 
       {/* Top-right counter */}
       <div style={{ position: 'absolute', top: 96, right: 28, textAlign: 'right', zIndex: 5 }}>
-        <div className="micro">EST. 2024 · SACRAMENTO, CA</div>
+        <div className="micro">EST. 2024 · UNITED STATES OF AMERICA</div>
         <div className="mono" style={{ fontSize: 11, marginTop: 6, letterSpacing: '0.1em' }}>
           UPTIME / {Math.floor(t)}.{String(Math.floor((t % 1) * 1000)).padStart(3, '0')}s
         </div>
@@ -749,7 +749,7 @@ function AboutContact({ palette }) {
       <div className="about-grid">
         <div>
           <div className="serif" style={{ fontSize: 'clamp(28px, 3.4vw, 44px)', lineHeight: 1.15, fontStyle: 'italic', marginBottom: 24 }}>
-            <span>Ambaverse</span> is the computational art project of <span style={{ background: 'var(--acid)', color: '#0b0b0e', padding: '0 8px' }}>Shashank</span>, an engineer-artist based in Greater Sacramento, CA.
+            <span>Ambaverse</span> is the computational art project of <span style={{ background: 'var(--acid)', color: '#0b0b0e', padding: '0 8px' }}>Shashank</span>, an engineer-artist based in United States.
           </div>
           <p style={{ fontSize: 16, lineHeight: 1.6, maxWidth: 560 }}>
             Practicing print, plotter drawings, interactive installations and audio-reactive performances. The constant is a refusal to treat code as a tool — it is the medium itself, with its own affordances and refusals.
