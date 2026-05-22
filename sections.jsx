@@ -980,12 +980,9 @@ function ProjectPage({ projectId, palette }) {
 
   return (
     <main style={{ minHeight: 'calc(100vh - 64px)', paddingTop: 64 }}>
-      <div style={{ padding: '32px 28px 0', display: 'flex', gap: 18, flexWrap: 'wrap' }}>
-        <a href="#gallery" data-cursor="hover" data-cursor-label="GALLERY" style={backLinkStyle()}>
-          ← Back to Gallery
-        </a>
-        <a href={categoryHref} data-cursor="text" style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--muted)', textDecoration: 'none' }}>
-          {project.category} projects ↗
+      <div style={{ padding: '32px 28px 0' }}>
+        <a href={categoryHref} data-cursor="hover" data-cursor-label={project.category.toUpperCase()} style={backLinkStyle()}>
+          ← Back to {project.category} projects
         </a>
       </div>
 
