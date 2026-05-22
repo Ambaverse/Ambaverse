@@ -44,6 +44,17 @@ function readSavedTheme() {
   } catch (e) { return 'dark'; }
 }
 
+// Hash router — supports #/, #/digital, #/physical, #/project/<id>
+// Also passes through legacy anchors like #gallery / #about (treated as home).
+function parseHash(hash) {
+  if (!hash) return { name: 'home' };
+  const raw = hash.replace(/^#\/?/, '');
+  if (raw === '' ) return { name: 'home' };
+  if (raw === 'digital' || raw === 'physical') return { name: 'category', category: raw };
+  if (raw.startsWith('project/')) return { name: 'project', id: raw.slice('project/'.length) };
+  return { name: 'home', anchor: raw };
+}
+
 function App() {
   const [t, setTweak] = window.useTweaks(/*EDITMODE-BEGIN*/{
     "palette": "acidpop",
@@ -67,15 +78,40 @@ function App() {
     if (grain) grain.style.display = t.showGrain ? 'block' : 'none';
   }, [t.palette, t.showGrain, theme]);
 
+  // Hash-based route
+  const [route, setRoute] = React.useState(() => parseHash(window.location.hash));
+  React.useEffect(() => {
+    const onHash = () => {
+      const next = parseHash(window.location.hash);
+      setRoute(next);
+      // Scroll to top on real route changes (not anchor-jumps within home)
+      if (next.name === 'category' || next.name === 'project') {
+        window.scrollTo(0, 0);
+      }
+    };
+    window.addEventListener('hashchange', onHash);
+    return () => window.removeEventListener('hashchange', onHash);
+  }, []);
+
   const [open, setOpen] = React.useState(null);
+
+  const isSubpage = route.name === 'category' || route.name === 'project';
 
   return (
     <>
       <window.Nav theme={theme} setTheme={setTheme} />
-      <window.Hero palette={palette} />
-      <window.Marquee />
-      <window.Gallery palette={palette} onOpen={setOpen} />
-      <window.AboutContact palette={palette} />
+      {!isSubpage && <>
+        <window.Hero palette={palette} />
+        <window.Marquee />
+        <window.Gallery palette={palette} onOpen={setOpen} />
+        <window.AboutContact palette={palette} />
+      </>}
+      {route.name === 'category' && (
+        <window.CategoryPage category={route.category} palette={palette} />
+      )}
+      {route.name === 'project' && (
+        <window.ProjectPage projectId={route.id} palette={palette} />
+      )}
 
       {open && <window.Detail work={open} palette={palette} onClose={() => setOpen(null)} />}
 

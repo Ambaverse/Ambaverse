@@ -33,6 +33,54 @@ const WORKS = [
   PH('008', 'physical'),
 ];
 
+// Projects = curated groupings of artworks. The sub-pages list these as
+// carousels; each project page shows its `works` with full descriptions.
+const PROJECTS = [
+  {
+    id: 'flow-studies', category: 'digital', no: 'P.01', title: 'Flow Studies', year: '2026',
+    blurb: 'A series exploring vector noise as gesture — invisible currents traced by particles, each frame slightly different from the last.',
+    works: [
+      { id: 'fs-001', title: 'Tidal Drift',     medium: 'WebGL · realtime',  year: '2026', description: 'Description forthcoming. The full text for this artwork will live here once published.' },
+      { id: 'fs-002', title: 'Quiet Field',     medium: 'WebGL · still',     year: '2026', description: 'Description forthcoming.' },
+      { id: 'fs-003', title: 'Eddy',            medium: 'Generative · realtime', year: '2026', description: 'Description forthcoming.' },
+    ],
+  },
+  {
+    id: 'oscillators', category: 'digital', no: 'P.02', title: 'Oscillators', year: '2026',
+    blurb: 'Coupled phase systems painting curves into time — Lissajous orbits remembered, then forgotten.',
+    works: [
+      { id: 'os-001', title: 'Two Pendulums',   medium: 'Canvas2D · realtime', year: '2026', description: 'Description forthcoming.' },
+      { id: 'os-002', title: 'Three Bodies',    medium: 'Canvas2D · still',    year: '2026', description: 'Description forthcoming.' },
+      { id: 'os-003', title: 'Resonance',       medium: 'WebAudio + WebGL',    year: '2026', description: 'Description forthcoming.' },
+    ],
+  },
+  {
+    id: 'after-images', category: 'digital', no: 'P.03', title: 'After Images', year: '2026',
+    blurb: 'What survives a flash? Long-exposure renders of decaying generative scenes — light remembering itself.',
+    works: [
+      { id: 'ai-001', title: 'Burn Mark',       medium: 'WebGL · long-exposure', year: '2026', description: 'Description forthcoming.' },
+      { id: 'ai-002', title: 'Phosphor',        medium: 'WebGL · still',         year: '2026', description: 'Description forthcoming.' },
+    ],
+  },
+  {
+    id: 'plotter-prints', category: 'physical', no: 'P.01', title: 'Plotter Prints', year: '2026',
+    blurb: 'AxiDraw pen plots on archival paper — drawings the algorithm cannot redraw the same way twice.',
+    works: [
+      { id: 'pp-001', title: 'Static I',        medium: 'AxiDraw · pen on paper · A2', year: '2026', description: 'Description forthcoming.' },
+      { id: 'pp-002', title: 'Static II',       medium: 'AxiDraw · pen on paper · A2', year: '2026', description: 'Description forthcoming.' },
+      { id: 'pp-003', title: 'Slow Curve',      medium: 'AxiDraw · ink on cotton · A1', year: '2026', description: 'Description forthcoming.' },
+    ],
+  },
+  {
+    id: 'risograph-zines', category: 'physical', no: 'P.02', title: 'Risograph Zines', year: '2026',
+    blurb: 'Limited-edition zines run on a two-colour Risograph — generative composition under deliberate print constraints.',
+    works: [
+      { id: 'rz-001', title: 'Issue 01',        medium: 'Riso · 2-color · 24pp', year: '2026', description: 'Description forthcoming.' },
+      { id: 'rz-002', title: 'Issue 02',        medium: 'Riso · 2-color · 16pp', year: '2026', description: 'Description forthcoming.' },
+    ],
+  },
+];
+
 // ===== NAV =====
 function Nav({ theme = 'light', setTheme = () => {} }) {
   const [time, setTime] = useState(() => new Date());
@@ -61,7 +109,7 @@ function Nav({ theme = 'light', setTheme = () => {} }) {
         </a>
       </div>
       <ul>
-        <li><a href="#" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} data-cursor="text">Home</a></li>
+        <li><a href="#" onClick={(e) => { e.preventDefault(); if (window.location.hash) { window.location.hash = ''; } window.scrollTo({ top: 0, behavior: 'smooth' }); }} data-cursor="text">Home</a></li>
         <li><a href="#gallery" data-cursor="text">Gallery</a></li>
         <li><a href="#about" data-cursor="text">About</a></li>
       </ul>
@@ -287,9 +335,8 @@ function Hero({ palette }) {
           </div>
         </div>
 
-        <div className="mono" style={{ fontSize: 13, letterSpacing: '0.22em', textTransform: 'uppercase', marginBottom: 14, display: 'flex', alignItems: 'center', gap: 12 }}>
-          <span style={{ background: 'var(--ink)', color: 'var(--bg)', padding: '4px 10px' }}>@spatiotemporality</span>
-          <span className="serif" style={{ fontStyle: 'italic', textTransform: 'none', fontSize: 18, letterSpacing: 0 }}>— a computational art project by Shashank</span>
+        <div className="serif" style={{ marginBottom: 14, fontStyle: 'italic', fontSize: 22, lineHeight: 1.3, letterSpacing: 0 }}>
+          Creating experiences rooted in the inner sanctum of my mind
         </div>
         <svg
           viewBox="0 0 1200 240"
@@ -506,16 +553,6 @@ function Gallery({ palette, onOpen }) {
               gap: 24,
             }}>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: 18 }}>
-                <span style={{
-                  background: g.accent,
-                  color: 'var(--ink)',
-                  border: '1.5px solid var(--ink)',
-                  fontFamily: 'JetBrains Mono, monospace',
-                  fontSize: 11, letterSpacing: '0.16em', textTransform: 'uppercase',
-                  padding: '4px 10px',
-                }}>
-                  {g.key === 'digital' ? '◐' : '◼'} {g.key}
-                </span>
                 <h3 style={{
                   fontSize: 'clamp(28px, 4vw, 56px)',
                   margin: 0, fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 1,
@@ -772,7 +809,7 @@ function AboutContact({ palette }) {
       <div className="about-grid">
         <div>
           <div className="serif" style={{ fontSize: 'clamp(28px, 3.4vw, 44px)', lineHeight: 1.15, fontStyle: 'italic', marginBottom: 24 }}>
-            <span>Ambaverse</span> is the computational art project of <span style={{ background: 'var(--acid)', color: '#0b0b0e', padding: '0 8px' }}>Shashank</span>, an engineer-artist based in United States.
+            <span>Ambaverse</span> is the art project of <span style={{ background: 'var(--acid)', color: '#0b0b0e', padding: '0 8px' }}>Shashank</span>, an indie artist based in United States.
           </div>
           <p style={{ fontSize: 16, lineHeight: 1.6, maxWidth: 560 }}>
             Practicing print, plotter drawings, interactive installations and audio-reactive performances. The constant is a refusal to treat code as a tool — it is the medium itself, with its own affordances and refusals.
@@ -786,33 +823,33 @@ function AboutContact({ palette }) {
               <span key={t} className="tag" style={{ background: 'transparent', color: '#f3efe4', borderColor: 'rgba(243,239,228,0.4)' }}>{t}</span>
             ))}
           </div>
+
+          <div style={{ borderTop: '1px solid rgba(243,239,228,0.25)', marginTop: 28, paddingTop: 24 }}>
+            <div className="micro" style={{ color: 'var(--cyan)', marginBottom: 14 }}>// FIND ME ON INSTAGRAM</div>
+            <a
+              href="https://www.instagram.com/spaciotemporality"
+              target="_blank" rel="noopener noreferrer"
+              style={{ fontSize: 'clamp(24px, 3vw, 36px)', display: 'inline-block', position: 'relative', color: '#f3efe4', textDecoration: 'none', fontWeight: 500, letterSpacing: '-0.01em' }}
+              onMouseEnter={() => setHover(true)}
+              onMouseLeave={() => setHover(false)}
+              data-cursor="hover" data-cursor-label="OPEN →"
+            >
+              @spaciotemporality
+              <span style={{
+                position: 'absolute', left: 0, right: 0, bottom: -4, height: hover ? 5 : 1,
+                background: 'var(--acid)', transition: 'height .2s ease'
+              }}></span>
+            </a>
+          </div>
         </div>
       </div>
 
       {/* Contact content — flows on the same background as the about section */}
       <div style={{ padding: '40px 28px 28px', borderTop: '1px solid var(--ink)' }}>
         <h2 className="contact-headline" style={{ color: 'var(--ink)' }}>
-          Let's make <span className="serif" style={{ color: 'var(--magenta)' }}>something</span><br/>
-          that doesn't <span style={{ background: 'var(--acid)', color: '#0b0b0e', padding: '0 8px' }}>repeat.</span>
+          Unravelling <span className="serif" style={{ color: 'var(--magenta)', whiteSpace: 'nowrap' }}>deep sentiments</span><br/>
+          in your <span style={{ background: 'var(--acid)', color: '#0b0b0e', padding: '0 8px' }}>hearts</span>
         </h2>
-
-        <div style={{ marginTop: 48 }}>
-          <div className="micro" style={{ color: 'var(--muted)', marginBottom: 14 }}>FIND ME ON INSTAGRAM</div>
-          <a
-            href="https://www.instagram.com/spaciotemporality"
-            target="_blank" rel="noopener noreferrer"
-            style={{ fontSize: 'clamp(32px, 5vw, 64px)', display: 'inline-block', position: 'relative', color: 'var(--ink)', textDecoration: 'none' }}
-            onMouseEnter={() => setHover(true)}
-            onMouseLeave={() => setHover(false)}
-            data-cursor="hover" data-cursor-label="OPEN →"
-          >
-            @spaciotemporality
-            <span style={{
-              position: 'absolute', left: 0, right: 0, bottom: -4, height: hover ? 6 : 1,
-              background: 'var(--acid)', transition: 'height .2s ease'
-            }}></span>
-          </a>
-        </div>
 
         <div style={{ marginTop: 64, padding: '20px 24px', border: '1.5px solid var(--ink)', background: 'rgba(11,11,14,0.03)' }}>
           <div className="micro" style={{ color: 'var(--muted)', marginBottom: 10 }}>// LEGAL NOTICE</div>
@@ -837,7 +874,207 @@ function AboutContact({ palette }) {
   );
 }
 
+// ===== CATEGORY PAGE (Digital / Physical sub-pages) =====
+// Lists the projects in a given category as a horizontal carousel.
+function CategoryPage({ category, palette }) {
+  const trackRef = useR(null);
+  const projects = PROJECTS.filter(p => p.category === category);
+  const Algo = window.GENERATIVE && window.GENERATIVE.placeholder;
+  const title = category === 'digital' ? 'Digital' : 'Physical';
+  const sub = category === 'digital'
+    ? 'Screen-native, generative, runtime-driven. Each project is a system, played in real time.'
+    : 'Print, plotter drawings, objects. Code translated into things you can hold.';
+
+  const scroll = (dir) => {
+    if (!trackRef.current) return;
+    const w = trackRef.current.clientWidth;
+    trackRef.current.scrollBy({ left: dir * w * 0.85, behavior: 'smooth' });
+  };
+
+  return (
+    <main style={{ minHeight: 'calc(100vh - 64px)', paddingTop: 64 }}>
+      <div className="section-head">
+        <div>
+          <div className="num">// {category.toUpperCase()} · {projects.length} PROJECT{projects.length === 1 ? '' : 'S'}</div>
+          <h2>{title} <span className="serif" style={{ fontStyle: 'italic', color: 'var(--muted)', fontWeight: 400 }}>/ projects</span></h2>
+        </div>
+        <div className="micro" style={{ maxWidth: 360, textAlign: 'right', color: 'var(--muted)', textTransform: 'none', letterSpacing: '0.04em', fontFamily: 'Instrument Serif, serif', fontStyle: 'italic', fontSize: 18, lineHeight: 1.3 }}>
+          {sub}
+        </div>
+      </div>
+
+      <div style={{ position: 'relative', padding: '40px 28px 24px' }}>
+        <div
+          ref={trackRef}
+          style={{
+            display: 'flex',
+            gap: 24,
+            overflowX: 'auto',
+            scrollSnapType: 'x mandatory',
+            paddingBottom: 16,
+            WebkitOverflowScrolling: 'touch',
+          }}
+        >
+          {projects.map((p) => (
+            <a
+              key={p.id}
+              href={`#/project/${p.id}`}
+              data-cursor="hover"
+              data-cursor-label="OPEN →"
+              style={{
+                flex: '0 0 auto',
+                scrollSnapAlign: 'start',
+                width: 'min(520px, 80vw)',
+                background: 'var(--paper)',
+                border: '2px solid var(--ink)',
+                color: 'var(--ink)',
+                textDecoration: 'none',
+                display: 'flex',
+                flexDirection: 'column',
+                cursor: 'none',
+                transition: 'transform .25s cubic-bezier(.2,.7,.2,1), box-shadow .25s ease',
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.transform = 'translate(-3px, -3px)'; e.currentTarget.style.boxShadow = '6px 6px 0 var(--ink)'; }}
+              onMouseLeave={(e) => { e.currentTarget.style.transform = ''; e.currentTarget.style.boxShadow = ''; }}
+            >
+              <div style={{ position: 'relative', aspectRatio: '4 / 3', borderBottom: '2px solid var(--ink)', overflow: 'hidden' }}>
+                {Algo && <div style={{ position: 'absolute', inset: 0 }}><Algo palette={palette} /></div>}
+                <div style={{
+                  position: 'absolute', top: 12, left: 12,
+                  background: 'var(--ink)', color: 'var(--bg)',
+                  padding: '4px 8px',
+                  fontFamily: 'JetBrains Mono, monospace',
+                  fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase',
+                  zIndex: 2,
+                }}>
+                  {p.no} · PROJECT
+                </div>
+              </div>
+              <div style={{ padding: 24, display: 'flex', flexDirection: 'column', gap: 14 }}>
+                <h3 style={{ fontSize: 32, margin: 0, fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 1 }}>{p.title}</h3>
+                <p style={{ fontSize: 14, lineHeight: 1.5, color: 'var(--muted)', margin: 0 }}>{p.blurb}</p>
+                <div style={{ marginTop: 6, display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', fontFamily: 'JetBrains Mono, monospace', fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase' }}>
+                  <span style={{ color: 'var(--muted)' }}>{p.works.length} works · {p.year}</span>
+                  <span>view →</span>
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+
+        <div style={{ display: 'flex', gap: 10, marginTop: 18 }}>
+          <button onClick={() => scroll(-1)} aria-label="Previous projects" data-cursor="hover" style={navBtnStyle()}>←</button>
+          <button onClick={() => scroll(1)}  aria-label="Next projects"     data-cursor="hover" style={navBtnStyle()}>→</button>
+          <div style={{ marginLeft: 'auto', alignSelf: 'center', fontFamily: 'JetBrains Mono, monospace', fontSize: 10.5, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--muted)' }}>
+            scroll →
+          </div>
+        </div>
+      </div>
+    </main>
+  );
+}
+
+function navBtnStyle() {
+  return {
+    width: 40, height: 40,
+    border: '1.5px solid var(--ink)',
+    background: 'var(--bg)',
+    color: 'var(--ink)',
+    fontFamily: 'JetBrains Mono, monospace',
+    fontSize: 16,
+    cursor: 'none',
+    padding: 0,
+  };
+}
+
+// ===== PROJECT PAGE — all artworks in a single project, with descriptions =====
+function ProjectPage({ projectId, palette }) {
+  const project = PROJECTS.find(p => p.id === projectId);
+  const Algo = window.GENERATIVE && window.GENERATIVE.placeholder;
+
+  if (!project) {
+    return (
+      <main style={{ minHeight: 'calc(100vh - 64px)', paddingTop: 120, padding: '120px 28px', textAlign: 'center' }}>
+        <div className="micro" style={{ color: 'var(--muted)', marginBottom: 12 }}>// 404</div>
+        <h1 style={{ fontSize: 56, margin: '0 0 24px' }}>Project not found</h1>
+        <a href="#" style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 12, letterSpacing: '0.14em', textTransform: 'uppercase', borderBottom: '1.5px solid var(--ink)', paddingBottom: 2 }}>← Back to home</a>
+      </main>
+    );
+  }
+
+  const categoryHref = `#/${project.category}`;
+
+  return (
+    <main style={{ minHeight: 'calc(100vh - 64px)', paddingTop: 64 }}>
+      <div style={{ padding: '40px 28px 24px' }}>
+        <a href={categoryHref} data-cursor="text" style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--muted)', textDecoration: 'none' }}>
+          ← {project.category}
+        </a>
+      </div>
+
+      <div className="section-head" style={{ paddingTop: 12 }}>
+        <div>
+          <div className="num">{project.no} · {project.category.toUpperCase()} PROJECT · {project.year}</div>
+          <h2>{project.title}</h2>
+        </div>
+        <div className="micro" style={{ color: 'var(--muted)' }}>
+          {String(project.works.length).padStart(2, '0')} {project.works.length === 1 ? 'WORK' : 'WORKS'}
+        </div>
+      </div>
+
+      <div style={{ padding: '40px 28px 24px' }}>
+        <p className="serif" style={{ fontSize: 'clamp(22px, 2.4vw, 32px)', fontStyle: 'italic', lineHeight: 1.3, maxWidth: 880, margin: 0 }}>
+          {project.blurb}
+        </p>
+      </div>
+
+      <div style={{ borderTop: '1px solid var(--ink)' }}>
+        {project.works.map((work, i) => (
+          <article
+            key={work.id}
+            style={{
+              borderBottom: '1px solid var(--ink)',
+              padding: '64px 28px',
+              display: 'grid',
+              gridTemplateColumns: '1.3fr 1fr',
+              gap: 56,
+              alignItems: 'start',
+            }}
+          >
+            <div style={{
+              position: 'relative',
+              aspectRatio: '4 / 3',
+              background: 'var(--paper)',
+              border: '2px solid var(--ink)',
+              overflow: 'hidden',
+            }}>
+              {Algo && <div style={{ position: 'absolute', inset: 0 }}><Algo palette={palette} /></div>}
+              <div style={{
+                position: 'absolute', top: 12, left: 12,
+                background: 'var(--ink)', color: 'var(--bg)',
+                padding: '4px 8px',
+                fontFamily: 'JetBrains Mono, monospace',
+                fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase',
+              }}>
+                {String(i + 1).padStart(2, '0')} / {String(project.works.length).padStart(2, '0')}
+              </div>
+            </div>
+            <div>
+              <div className="micro" style={{ color: 'var(--muted)' }}>{work.medium} · {work.year}</div>
+              <h3 style={{ fontSize: 'clamp(32px, 4vw, 56px)', margin: '12px 0 24px', fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 1 }}>{work.title}</h3>
+              <p style={{ fontSize: 16, lineHeight: 1.65, color: 'var(--ink)', margin: 0, maxWidth: 540 }}>
+                {work.description}
+              </p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </main>
+  );
+}
+
 Object.assign(window, {
   Nav, Hero, Marquee, Gallery, Archive, Detail, Process, AboutContact,
-  WORKS,
+  CategoryPage, ProjectPage,
+  WORKS, PROJECTS,
 });
