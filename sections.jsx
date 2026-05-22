@@ -421,28 +421,32 @@ function Gallery({ palette, onOpen }) {
 
   const visibleGroups = filter === 'all' ? groups : groups.filter(g => g.key === filter);
 
-  function renderCell(w, i, total) {
-    const Algo = window.GENERATIVE[w.algo];
-    const isPH = w.isPlaceholder;
+  function renderProjectCell(p, i, columns) {
+    const Algo = window.GENERATIVE && window.GENERATIVE.placeholder;
     return (
-      <div
-        key={w.id}
-        data-cursor={isPH ? undefined : "hover"}
-        data-cursor-label={isPH ? undefined : "OPEN →"}
-        onClick={() => { if (!isPH) onOpen(w); }}
+      <a
+        key={p.id}
+        href={`#/project/${p.id}`}
+        data-cursor="hover"
+        data-cursor-label="OPEN →"
         style={{
           position: 'relative',
-          aspectRatio: '1 / 1',
-          borderRight: (i + 1) % 6 === 0 ? 'none' : '1px solid var(--ink)',
+          width: 240,
+          height: 240,
+          flex: '0 0 240px',
+          borderRight: '1px solid var(--ink)',
           borderTop: '1px solid var(--ink)',
           background: 'var(--paper)',
           overflow: 'hidden',
           cursor: 'none',
+          color: 'var(--ink)',
+          textDecoration: 'none',
+          display: 'block',
         }}
         className="gallery-cell"
       >
         <div style={{ position: 'absolute', inset: 0 }}>
-          <Algo palette={palette} />
+          {Algo && <Algo palette={palette} />}
         </div>
 
         <div className="gallery-overlay" style={{
@@ -454,33 +458,15 @@ function Gallery({ palette, onOpen }) {
           zIndex: 2, pointerEvents: 'none',
         }}>
           <div className="mono" style={{ fontSize: 10, letterSpacing: '0.14em', color: 'var(--acid)' }}>
-            {w.no} · {w.category.toUpperCase()}
+            {p.no} · {p.category.toUpperCase()} PROJECT
           </div>
-          {isPH ? (
-            <div>
-              <div style={{ fontSize: 22, fontWeight: 500, letterSpacing: '-0.01em', lineHeight: 1.1 }}>
-                Awaiting<br/>upload
-              </div>
-              <div className="serif" style={{ fontStyle: 'italic', fontSize: 15, opacity: 0.7, marginTop: 8 }}>
-                slot reserved · {w.category}
-              </div>
-            </div>
-          ) : (
-            <div>
-              <div style={{ fontSize: 28, fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 1 }}>{w.title}</div>
-              <div className="serif" style={{ fontStyle: 'italic', fontSize: 15, opacity: 0.8, marginTop: 6 }}>{w.medium}</div>
-              <div style={{ display: 'flex', gap: 6, marginTop: 12, flexWrap: 'wrap' }}>
-                {w.tags.map(t => (
-                  <span key={t} className="mono" style={{ fontSize: 9.5, letterSpacing: '0.1em', textTransform: 'uppercase', border: '1px solid var(--bg)', padding: '2px 6px' }}>{t}</span>
-                ))}
-              </div>
-            </div>
-          )}
+          <div>
+            <div style={{ fontSize: 26, fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 1 }}>{p.title}</div>
+            <div className="serif" style={{ fontStyle: 'italic', fontSize: 14, opacity: 0.85, marginTop: 8, lineHeight: 1.4 }}>{p.blurb}</div>
+          </div>
           <div className="mono" style={{ fontSize: 10, letterSpacing: '0.14em', textTransform: 'uppercase', display: 'flex', justifyContent: 'space-between' }}>
-            <span>{w.year}</span>
-            <span style={{ color: isPH ? 'var(--muted)' : 'var(--acid)' }}>
-              {isPH ? '— PENDING —' : 'OPEN →'}
-            </span>
+            <span>{p.works.length} works · {p.year}</span>
+            <span style={{ color: 'var(--acid)' }}>OPEN →</span>
           </div>
         </div>
 
@@ -494,10 +480,10 @@ function Gallery({ palette, onOpen }) {
           fontSize: 10, letterSpacing: '0.1em', textTransform: 'uppercase',
           zIndex: 1, transition: 'opacity .25s ease',
         }}>
-          <span>{w.no} · {isPH ? 'placeholder' : w.title}</span>
-          <span>{w.year}</span>
+          <span>{p.no} · {p.title}</span>
+          <span>{p.year}</span>
         </div>
-      </div>
+      </a>
     );
   }
 
@@ -509,7 +495,7 @@ function Gallery({ palette, onOpen }) {
           <h2>Gallery</h2>
         </div>
         <div style={{ display: 'flex', gap: 8, alignItems: 'flex-end', flexDirection: 'column' }}>
-          <div className="micro">{WORKS.length} WORKS · {WORKS.filter(w=>w.category==='digital').length} DIGITAL · {WORKS.filter(w=>w.category==='physical').length} PHYSICAL</div>
+          <div className="micro">{PROJECTS.length} PROJECTS · {PROJECTS.filter(p=>p.category==='digital').length} DIGITAL · {PROJECTS.filter(p=>p.category==='physical').length} PHYSICAL</div>
           <div style={{ display: 'flex', gap: 6 }}>
             {[
               { k: 'all', label: 'ALL' },
@@ -540,7 +526,8 @@ function Gallery({ palette, onOpen }) {
       </div>
 
       {visibleGroups.map((g) => {
-        const items = WORKS.filter(w => w.category === g.key);
+        const items = PROJECTS.filter(p => p.category === g.key);
+        const columns = Math.min(4, Math.max(items.length, 1));
         return (
           <div key={g.key}>
             {/* Category divider */}
@@ -569,17 +556,16 @@ function Gallery({ palette, onOpen }) {
                 </h3>
               </div>
               <div className="mono" style={{ fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>
-                {String(items.length).padStart(2, '0')} works
+                {String(items.length).padStart(2, '0')} projects
               </div>
             </div>
 
             <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(6, 1fr)',
-              gap: 0,
+              display: 'flex',
+              flexWrap: 'wrap',
               borderBottom: '2px solid var(--ink)',
             }}>
-              {items.map((w, i) => renderCell(w, i, items.length))}
+              {items.map((p, i) => renderProjectCell(p, i, columns))}
             </div>
           </div>
         );
@@ -827,7 +813,7 @@ function AboutContact({ palette }) {
         <div style={{ background: '#0b0b0e', color: '#f3efe4' }}>
           <div className="micro" style={{ color: 'var(--cyan)', marginBottom: 12 }}>// STACK</div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-            {['TypeScript', 'GLSL', 'p5.js', 'Three.js', 'Canvas2D', 'AxiDraw', 'Risograph', 'Houdini', 'Max/MSP', 'Figma', 'Vim', 'TouchDesigner'].map(t => (
+            {['p5', 'p5js', 'Processing', 'Python', 'Javascript', 'AxiDraw'].map(t => (
               <span key={t} className="tag" style={{ background: 'transparent', color: '#f3efe4', borderColor: 'rgba(243,239,228,0.4)' }}>{t}</span>
             ))}
           </div>
@@ -864,11 +850,8 @@ function AboutContact({ palette }) {
           </p>
         </div>
 
-        <div style={{ marginTop: 24, paddingTop: 20, borderTop: '1px solid var(--ink)', display: 'flex', justifyContent: 'space-between', gap: 20, flexWrap: 'wrap', fontSize: 10.5, fontFamily: 'JetBrains Mono, monospace', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--muted)' }}>
-          <span>© 2024–2026 SHASHANK / AMBAVERSE · ALL RIGHTS RESERVED</span>
-        </div>
-        <div style={{ marginTop: 14, fontSize: 10.5, fontFamily: 'JetBrains Mono, monospace', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--muted)' }}>
-          Custom theme with Claude Design and Claude Code
+        <div style={{ marginTop: 24, fontSize: 10.5, fontFamily: 'JetBrains Mono, monospace', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--muted)' }}>
+          © 2024–2026 SHASHANK / AMBAVERSE · ALL RIGHTS RESERVED · CUSTOM THEME WITH CLAUDE DESIGN AND CLAUDE CODE
         </div>
       </div>
     </section>
