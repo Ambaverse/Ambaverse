@@ -240,13 +240,13 @@ function Hero({ palette }) {
   }, []);
 
   return (
-    <section style={{ position: 'relative', height: 'calc(100vh - 48px)', minHeight: 672, overflow: 'hidden' }}>
+    <section className="hero-section" style={{ position: 'relative', height: 'calc(100vh - 48px)', minHeight: 672, overflow: 'hidden' }}>
       <div style={{ position: 'absolute', inset: 0 }}>
         <window.HeroField palette={palette} />
       </div>
 
       {/* Top-right counter */}
-      <div style={{ position: 'absolute', top: 96, right: 28, textAlign: 'right', zIndex: 5 }}>
+      <div className="hero-counter" style={{ position: 'absolute', top: 96, right: 28, textAlign: 'right', zIndex: 5 }}>
         <div className="micro">EST. 2024 · UNITED STATES OF AMERICA</div>
         <div className="mono" style={{ fontSize: 11, marginTop: 6, letterSpacing: '0.1em' }}>
           UPTIME / {Math.floor(t)}.{String(Math.floor((t % 1) * 1000)).padStart(3, '0')}s
@@ -262,14 +262,9 @@ function Hero({ palette }) {
         pointerEvents: 'none',
       }}>
         {/* Featured cards row */}
-        <div style={{ pointerEvents: 'auto', marginBottom: 24 }}>
+        <div style={{ pointerEvents: 'auto', marginBottom: 24, maxWidth: 980, marginLeft: 'auto', marginRight: 'auto', textAlign: 'center' }}>
           <div className="micro" style={{ marginBottom: 10, opacity: 0.75 }}>// FEATURED · 03 SLOTS</div>
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: 14,
-            maxWidth: 980,
-          }}>
+          <div className="feature-grid" style={{ textAlign: 'left' }}>
             {[
               { id: 'ft1', no: 'FT.01', title: 'UNTITLED', medium: 'Generative · forthcoming', year: '2026' },
               { id: 'ft2', no: 'FT.02', title: 'UNTITLED', medium: 'Print · forthcoming',       year: '2026' },
@@ -336,6 +331,7 @@ function Hero({ palette }) {
         </div>
 
         <svg
+          className="amba-title-svg"
           viewBox="0 0 1200 240"
           preserveAspectRatio="xMidYMid meet"
           aria-label="AMBAVERSE"
@@ -350,9 +346,11 @@ function Hero({ palette }) {
                 textAnchor="middle"
                 fontFamily="Space Grotesk, system-ui, sans-serif"
                 fontWeight="800"
-                fontSize="220"
-                letterSpacing="-10"
+                fontSize="190"
+                letterSpacing="-8"
                 fill="white"
+                textLength="1100"
+                lengthAdjust="spacingAndGlyphs"
               >
                 AMBAVERSE
               </text>
@@ -984,14 +982,7 @@ function ProjectPage({ projectId, palette }) {
         {project.works.map((work, i) => (
           <article
             key={work.id}
-            style={{
-              borderBottom: '1px solid var(--ink)',
-              padding: '64px 28px',
-              display: 'grid',
-              gridTemplateColumns: '1.3fr 1fr',
-              gap: 56,
-              alignItems: 'start',
-            }}
+            className="project-row"
           >
             <div style={{
               position: 'relative',
