@@ -370,6 +370,105 @@
   /* Featured project cards in the hero */
   .feature-card { transition: transform .22s cubic-bezier(.2,.7,.2,1), box-shadow .22s ease; }
   .feature-card:hover { transform: translate(-3px, -3px); box-shadow: 6px 6px 0 var(--ink); }
+
+  /* ============================================================
+     RESPONSIVE OVERRIDES
+     ============================================================ */
+
+  /* Touch devices: restore the native cursor, hide the pixel arrow */
+  @media (hover: none), (pointer: coarse) {
+    body, .has-no-cursor, .has-no-cursor * { cursor: auto !important; }
+    .cursor, .cursor-label { display: none !important; }
+  }
+
+  /* Featured cards (className="feature-grid") */
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  @media (max-width: 960px) {
+    .feature-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .feature-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Project-detail artwork rows (className="project-row") */
+  .project-row {
+    border-bottom: 1px solid var(--ink);
+    padding: 64px 28px;
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 56px;
+    align-items: start;
+  }
+  @media (max-width: 900px) {
+    .project-row { grid-template-columns: 1fr; gap: 28px; padding: 40px 24px; }
+  }
+
+  /* About grid: stack to one column on phones */
+  @media (max-width: 800px) {
+    .about-grid { grid-template-columns: 1fr; }
+    .about-grid > div:first-child { border-right: none; border-bottom: 1px solid var(--ink); }
+    .about-grid > div { padding: 24px; }
+  }
+
+  /* Section heads — wrap and downscale the right-side meta on phones */
+  @media (max-width: 700px) {
+    .section-head {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 48px 24px 24px;
+      gap: 16px;
+    }
+    .section-head h2 { font-size: clamp(22px, 7vw, 36px); }
+  }
+
+  /* Nav — wrap on smaller widths; stack into rows below 720px */
+  @media (max-width: 900px) {
+    nav.top { flex-wrap: wrap; gap: 10px 14px; padding: 12px 18px; }
+    nav.top .clock { gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
+    nav.top ul { gap: 16px; }
+  }
+  @media (max-width: 560px) {
+    nav.top { padding: 10px 14px; gap: 8px 12px; }
+    nav.top ul { order: 3; flex-basis: 100%; justify-content: center; gap: 18px; padding-top: 8px; border-top: 1px solid var(--ink); }
+    nav.top .brand img { height: 22px; }
+  }
+
+  /* Hero top-right counter — hide on phones (overlaps the nav) */
+  @media (max-width: 760px) {
+    .hero-counter { display: none !important; }
+  }
+
+  /* AMBAVERSE title SVG — allow full width on phones */
+  @media (max-width: 760px) {
+    .amba-title-svg { width: 100% !important; max-height: 22vh !important; }
+  }
+
+  /* Hero — relax the min-height on phones so the empty middle shrinks */
+  @media (max-width: 760px) {
+    .hero-section { min-height: 520px !important; }
+  }
+
+  /* Gallery tiles — shrink to fit narrow viewports */
+  @media (max-width: 560px) {
+    .gallery-cell { width: 100% !important; height: auto !important; aspect-ratio: 1 / 1; flex-basis: 100% !important; }
+    .gallery-cell .gallery-overlay { opacity: 1 !important; }
+    .gallery-cell .gallery-strip { display: none !important; }
+  }
+
+  /* Footer last line — stack the legal/copyright at narrow widths */
+  @media (max-width: 700px) {
+    footer { padding: 40px 20px; }
+    footer .contact-headline { font-size: clamp(40px, 12vw, 84px); }
+  }
+
+  /* Scroll-padding scales with nav height (which grows on mobile after wrap) */
+  @media (max-width: 560px) {
+    html { scroll-padding-top: 112px; }
+  }
 </style>
 </head>
 <body class="has-no-cursor">
@@ -451,5 +550,6 @@
 })();
 </script>
 
+<script src="_diag.js"></script>
 </body>
 </html>
