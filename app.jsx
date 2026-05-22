@@ -93,6 +93,27 @@ function App() {
     return () => window.removeEventListener('hashchange', onHash);
   }, []);
 
+  // Honour anchor jumps (e.g. #gallery, #about) after the home view mounts.
+  // The browser's native anchor scroll runs before React renders the home
+  // content when coming from a sub-page, so we re-scroll once the target
+  // element actually exists in the DOM.
+  React.useEffect(() => {
+    if (route.name !== 'home' || !route.anchor) return;
+    let cancelled = false;
+    const attempt = (tries) => {
+      if (cancelled) return;
+      const el = document.getElementById(route.anchor);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else if (tries > 0) {
+        // Element not yet mounted — try again next frame.
+        requestAnimationFrame(() => attempt(tries - 1));
+      }
+    };
+    requestAnimationFrame(() => attempt(20));
+    return () => { cancelled = true; };
+  }, [route]);
+
   const [open, setOpen] = React.useState(null);
 
   const isSubpage = route.name === 'category' || route.name === 'project';
