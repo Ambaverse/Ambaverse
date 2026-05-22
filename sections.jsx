@@ -335,19 +335,11 @@ function Hero({ palette }) {
           </div>
         </div>
 
-        <div style={{ marginBottom: 14, display: 'flex', alignItems: 'flex-start', gap: 36, flexWrap: 'wrap' }}>
-          <div className="serif" style={{ fontStyle: 'italic', fontSize: 22, lineHeight: 1.3, letterSpacing: 0 }}>
-            Creating experiences rooted in the inner sanctum of my mind
-          </div>
-          <div style={{ fontSize: 22, lineHeight: 1.3, letterSpacing: 0 }}>
-            Unravelling <span className="serif" style={{ fontStyle: 'italic', color: 'var(--magenta)', whiteSpace: 'nowrap' }}>deep sentiments</span> in your <span style={{ background: 'var(--acid)', color: '#0b0b0e', padding: '0 6px' }}>hearts</span>
-          </div>
-        </div>
         <svg
           viewBox="0 0 1200 240"
           preserveAspectRatio="xMidYMid meet"
           aria-label="AMBAVERSE"
-          style={{ width: '100%', height: 'auto', maxHeight: '32vh', display: 'block', overflow: 'visible' }}
+          style={{ width: '80%', height: 'auto', maxHeight: '26vh', display: 'block', margin: '0 auto', overflow: 'visible' }}
         >
           <defs>
             {/* Text mask — white inside the letters, black outside */}
@@ -387,6 +379,9 @@ function Hero({ palette }) {
             <rect width="1200" height="240" filter="url(#amba-tex)" />
           </g>
         </svg>
+        <div className="serif" style={{ marginTop: -10, fontStyle: 'italic', fontSize: 18, lineHeight: 1.3, letterSpacing: 0, textAlign: 'center' }}>
+          Creating experiences rooted in the inner sanctum of my mind, unravelling deep sentiments in your hearts.
+        </div>
       </div>
 
     </section>
@@ -822,7 +817,7 @@ function AboutContact({ palette }) {
       <div className="about-grid">
         <div>
           <div className="serif" style={{ fontSize: 'clamp(28px, 3.4vw, 44px)', lineHeight: 1.15, fontStyle: 'italic', marginBottom: 24 }}>
-            <span>Ambaverse</span> is the art project of <span style={{ background: 'var(--acid)', color: '#0b0b0e', padding: '0 8px' }}>Shashank</span>, an indie artist based in United States.
+            <span>Ambaverse</span> is the art portfolio of <span style={{ background: 'var(--acid)', color: '#0b0b0e', padding: '0 8px' }}>Shashank</span>, an indie artist based in United States.
           </div>
           <p style={{ fontSize: 16, lineHeight: 1.6, maxWidth: 560 }}>
             Practicing print, plotter drawings, interactive installations and audio-reactive performances. Each piece is a small world — a room where mathematics is permitted to dream, and I am only the hand at the table, listening, writing it down.
