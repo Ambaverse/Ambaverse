@@ -335,8 +335,13 @@ function Hero({ palette }) {
           </div>
         </div>
 
-        <div className="serif" style={{ marginBottom: 14, fontStyle: 'italic', fontSize: 22, lineHeight: 1.3, letterSpacing: 0 }}>
-          Creating experiences rooted in the inner sanctum of my mind
+        <div style={{ marginBottom: 14, display: 'flex', alignItems: 'flex-start', gap: 36, flexWrap: 'wrap' }}>
+          <div className="serif" style={{ fontStyle: 'italic', fontSize: 22, lineHeight: 1.3, letterSpacing: 0 }}>
+            Creating experiences rooted in the inner sanctum of my mind
+          </div>
+          <div style={{ fontSize: 22, lineHeight: 1.3, letterSpacing: 0 }}>
+            Unravelling <span className="serif" style={{ fontStyle: 'italic', color: 'var(--magenta)', whiteSpace: 'nowrap' }}>deep sentiments</span> in your <span style={{ background: 'var(--acid)', color: '#0b0b0e', padding: '0 6px' }}>hearts</span>
+          </div>
         </div>
         <svg
           viewBox="0 0 1200 240"
@@ -415,8 +420,8 @@ function Marquee() {
 function Gallery({ palette, onOpen }) {
   const [filter, setFilter] = useState('all'); // all | digital | physical
   const groups = [
-    { key: 'digital',  label: 'Digital Works',  sub: 'screen-native · live · generative', accent: 'var(--cyan)' },
-    { key: 'physical', label: 'Physical Works', sub: 'print · plotter · object',          accent: 'var(--magenta)' },
+    { key: 'digital',  label: 'Digital Works',  sub: '', accent: 'var(--cyan)' },
+    { key: 'physical', label: 'Physical Works', sub: '', accent: 'var(--magenta)' },
   ];
 
   const visibleGroups = filter === 'all' ? groups : groups.filter(g => g.key === filter);
@@ -506,7 +511,7 @@ function Gallery({ palette, onOpen }) {
       <div className="section-head">
         <div>
           <div className="num">// SECTION 01 — GALLERY</div>
-          <h2>Gallery <span className="serif" style={{ fontStyle: 'italic', color: 'var(--muted)' }}>/ live renders</span></h2>
+          <h2>Gallery</h2>
         </div>
         <div style={{ display: 'flex', gap: 8, alignItems: 'flex-end', flexDirection: 'column' }}>
           <div className="micro">{WORKS.length} WORKS · {WORKS.filter(w=>w.category==='digital').length} DIGITAL · {WORKS.filter(w=>w.category==='physical').length} PHYSICAL</div>
@@ -554,10 +559,18 @@ function Gallery({ palette, onOpen }) {
             }}>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: 18 }}>
                 <h3 style={{
-                  fontSize: 'clamp(28px, 4vw, 56px)',
-                  margin: 0, fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 1,
+                  fontSize: 'clamp(13px, 1.2vw, 17px)',
+                  margin: 0, fontWeight: 500, letterSpacing: '0.02em', lineHeight: 1.1, textTransform: 'uppercase',
                 }}>
-                  {g.label} <span className="serif" style={{ fontStyle: 'italic', color: 'var(--muted)', fontWeight: 400 }}>— {g.sub}</span>
+                  <a
+                    href={`#/${g.key}`}
+                    data-cursor="hover"
+                    data-cursor-label="OPEN →"
+                    style={{ color: 'var(--ink)', textDecoration: 'none', borderBottom: '1px solid currentColor', paddingBottom: 2 }}
+                  >
+                    {g.label} <span aria-hidden="true" style={{ marginLeft: 4 }}>→</span>
+                  </a>
+                  {g.sub && <span className="serif" style={{ fontStyle: 'italic', color: 'var(--muted)', fontWeight: 400, textTransform: 'none', letterSpacing: 0 }}> — {g.sub}</span>}
                 </h3>
               </div>
               <div className="mono" style={{ fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>
@@ -801,7 +814,7 @@ function AboutContact({ palette }) {
       <div className="section-head">
         <div>
           <div className="num">// SECTION 02 — PROFILE & CONTACT</div>
-          <h2>About the practice</h2>
+          <h2>About</h2>
         </div>
         <div className="micro">EST. 2024</div>
       </div>
@@ -812,7 +825,7 @@ function AboutContact({ palette }) {
             <span>Ambaverse</span> is the art project of <span style={{ background: 'var(--acid)', color: '#0b0b0e', padding: '0 8px' }}>Shashank</span>, an indie artist based in United States.
           </div>
           <p style={{ fontSize: 16, lineHeight: 1.6, maxWidth: 560 }}>
-            Practicing print, plotter drawings, interactive installations and audio-reactive performances. The constant is a refusal to treat code as a tool — it is the medium itself, with its own affordances and refusals.
+            Practicing print, plotter drawings, interactive installations and audio-reactive performances. Each piece is a small world — a room where mathematics is permitted to dream, and I am only the hand at the table, listening, writing it down.
           </p>
         </div>
 
@@ -846,25 +859,18 @@ function AboutContact({ palette }) {
 
       {/* Contact content — flows on the same background as the about section */}
       <div style={{ padding: '40px 28px 28px', borderTop: '1px solid var(--ink)' }}>
-        <h2 className="contact-headline" style={{ color: 'var(--ink)' }}>
-          Unravelling <span className="serif" style={{ color: 'var(--magenta)', whiteSpace: 'nowrap' }}>deep sentiments</span><br/>
-          in your <span style={{ background: 'var(--acid)', color: '#0b0b0e', padding: '0 8px' }}>hearts</span>
-        </h2>
-
-        <div style={{ marginTop: 64, padding: '20px 24px', border: '1.5px solid var(--ink)', background: 'rgba(11,11,14,0.03)' }}>
+        <div style={{ marginTop: 0, padding: '20px 24px', border: '1.5px solid var(--ink)', background: 'rgba(11,11,14,0.03)' }}>
           <div className="micro" style={{ color: 'var(--muted)', marginBottom: 10 }}>// LEGAL NOTICE</div>
           <div className="serif" style={{ fontSize: 20, lineHeight: 1.3, fontStyle: 'italic', maxWidth: 880, marginBottom: 12, color: 'var(--ink)' }}>
             All works on this site are <span style={{ background: 'var(--acid)', color: '#0b0b0e', padding: '0 6px' }}>© Shashank / Ambaverse</span>. All rights reserved.
           </div>
-          <p style={{ fontSize: 13, lineHeight: 1.55, maxWidth: 780, color: 'var(--muted)', margin: 0 }}>
+          <p style={{ fontSize: 13, lineHeight: 1.55, color: 'var(--muted)', margin: 0 }}>
             No portion of these works — including images, source code, generative outputs, video captures, prints, and derivative renderings — may be reproduced, distributed, displayed, transmitted, modified, or used to train any machine-learning model without explicit prior written permission from the artist. Quotation for criticism or journalism is welcome with attribution; everything else requires a license. Inquiries via Instagram DM.
           </p>
         </div>
 
         <div style={{ marginTop: 24, paddingTop: 20, borderTop: '1px solid var(--ink)', display: 'flex', justifyContent: 'space-between', gap: 20, flexWrap: 'wrap', fontSize: 10.5, fontFamily: 'JetBrains Mono, monospace', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--muted)' }}>
           <span>© 2024–2026 SHASHANK / AMBAVERSE · ALL RIGHTS RESERVED</span>
-          <span>SITE COMPILED {new Date().toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }).toUpperCase()} · BUILD f3a91d</span>
-          <span>NO TRACKERS · NO COOKIES</span>
         </div>
         <div style={{ marginTop: 14, fontSize: 10.5, fontFamily: 'JetBrains Mono, monospace', letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--muted)' }}>
           Custom theme with Claude Design and Claude Code
@@ -875,9 +881,8 @@ function AboutContact({ palette }) {
 }
 
 // ===== CATEGORY PAGE (Digital / Physical sub-pages) =====
-// Lists the projects in a given category as a horizontal carousel.
+// Lists the projects in a given category as a responsive grid.
 function CategoryPage({ category, palette }) {
-  const trackRef = useR(null);
   const projects = PROJECTS.filter(p => p.category === category);
   const Algo = window.GENERATIVE && window.GENERATIVE.placeholder;
   const title = category === 'digital' ? 'Digital' : 'Physical';
@@ -885,36 +890,29 @@ function CategoryPage({ category, palette }) {
     ? 'Screen-native, generative, runtime-driven. Each project is a system, played in real time.'
     : 'Print, plotter drawings, objects. Code translated into things you can hold.';
 
-  const scroll = (dir) => {
-    if (!trackRef.current) return;
-    const w = trackRef.current.clientWidth;
-    trackRef.current.scrollBy({ left: dir * w * 0.85, behavior: 'smooth' });
-  };
-
   return (
     <main style={{ minHeight: 'calc(100vh - 64px)', paddingTop: 64 }}>
-      <div className="section-head">
+      <div style={{ padding: '32px 28px 0' }}>
+        <a href="#gallery" data-cursor="hover" data-cursor-label="GALLERY" style={backLinkStyle()}>
+          ← Back to Gallery
+        </a>
+      </div>
+      <div className="section-head" style={{ paddingTop: 24 }}>
         <div>
           <div className="num">// {category.toUpperCase()} · {projects.length} PROJECT{projects.length === 1 ? '' : 'S'}</div>
           <h2>{title} <span className="serif" style={{ fontStyle: 'italic', color: 'var(--muted)', fontWeight: 400 }}>/ projects</span></h2>
         </div>
-        <div className="micro" style={{ maxWidth: 360, textAlign: 'right', color: 'var(--muted)', textTransform: 'none', letterSpacing: '0.04em', fontFamily: 'Instrument Serif, serif', fontStyle: 'italic', fontSize: 18, lineHeight: 1.3 }}>
+        <div style={{ maxWidth: 360, textAlign: 'right', color: 'var(--muted)', fontFamily: 'Instrument Serif, serif', fontStyle: 'italic', fontSize: 18, lineHeight: 1.3 }}>
           {sub}
         </div>
       </div>
 
-      <div style={{ position: 'relative', padding: '40px 28px 24px' }}>
-        <div
-          ref={trackRef}
-          style={{
-            display: 'flex',
-            gap: 24,
-            overflowX: 'auto',
-            scrollSnapType: 'x mandatory',
-            paddingBottom: 16,
-            WebkitOverflowScrolling: 'touch',
-          }}
-        >
+      <div style={{ padding: '40px 28px 60px' }}>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+          gap: 24,
+        }}>
           {projects.map((p) => (
             <a
               key={p.id}
@@ -922,9 +920,6 @@ function CategoryPage({ category, palette }) {
               data-cursor="hover"
               data-cursor-label="OPEN →"
               style={{
-                flex: '0 0 auto',
-                scrollSnapAlign: 'start',
-                width: 'min(520px, 80vw)',
                 background: 'var(--paper)',
                 border: '2px solid var(--ink)',
                 color: 'var(--ink)',
@@ -951,7 +946,7 @@ function CategoryPage({ category, palette }) {
                 </div>
               </div>
               <div style={{ padding: 24, display: 'flex', flexDirection: 'column', gap: 14 }}>
-                <h3 style={{ fontSize: 32, margin: 0, fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 1 }}>{p.title}</h3>
+                <h3 style={{ fontSize: 28, margin: 0, fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 1 }}>{p.title}</h3>
                 <p style={{ fontSize: 14, lineHeight: 1.5, color: 'var(--muted)', margin: 0 }}>{p.blurb}</p>
                 <div style={{ marginTop: 6, display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', fontFamily: 'JetBrains Mono, monospace', fontSize: 11, letterSpacing: '0.12em', textTransform: 'uppercase' }}>
                   <span style={{ color: 'var(--muted)' }}>{p.works.length} works · {p.year}</span>
@@ -961,30 +956,9 @@ function CategoryPage({ category, palette }) {
             </a>
           ))}
         </div>
-
-        <div style={{ display: 'flex', gap: 10, marginTop: 18 }}>
-          <button onClick={() => scroll(-1)} aria-label="Previous projects" data-cursor="hover" style={navBtnStyle()}>←</button>
-          <button onClick={() => scroll(1)}  aria-label="Next projects"     data-cursor="hover" style={navBtnStyle()}>→</button>
-          <div style={{ marginLeft: 'auto', alignSelf: 'center', fontFamily: 'JetBrains Mono, monospace', fontSize: 10.5, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--muted)' }}>
-            scroll →
-          </div>
-        </div>
       </div>
     </main>
   );
-}
-
-function navBtnStyle() {
-  return {
-    width: 40, height: 40,
-    border: '1.5px solid var(--ink)',
-    background: 'var(--bg)',
-    color: 'var(--ink)',
-    fontFamily: 'JetBrains Mono, monospace',
-    fontSize: 16,
-    cursor: 'none',
-    padding: 0,
-  };
 }
 
 // ===== PROJECT PAGE — all artworks in a single project, with descriptions =====
@@ -1006,9 +980,12 @@ function ProjectPage({ projectId, palette }) {
 
   return (
     <main style={{ minHeight: 'calc(100vh - 64px)', paddingTop: 64 }}>
-      <div style={{ padding: '40px 28px 24px' }}>
+      <div style={{ padding: '32px 28px 0', display: 'flex', gap: 18, flexWrap: 'wrap' }}>
+        <a href="#gallery" data-cursor="hover" data-cursor-label="GALLERY" style={backLinkStyle()}>
+          ← Back to Gallery
+        </a>
         <a href={categoryHref} data-cursor="text" style={{ fontFamily: 'JetBrains Mono, monospace', fontSize: 11, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--muted)', textDecoration: 'none' }}>
-          ← {project.category}
+          {project.category} projects ↗
         </a>
       </div>
 
@@ -1071,6 +1048,25 @@ function ProjectPage({ projectId, palette }) {
       </div>
     </main>
   );
+}
+
+// Shared style for sub-page back buttons.
+function backLinkStyle() {
+  return {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: 8,
+    border: '1.5px solid var(--ink)',
+    background: 'var(--bg)',
+    color: 'var(--ink)',
+    padding: '8px 14px',
+    fontFamily: 'JetBrains Mono, monospace',
+    fontSize: 11,
+    letterSpacing: '0.14em',
+    textTransform: 'uppercase',
+    textDecoration: 'none',
+    cursor: 'none',
+  };
 }
 
 Object.assign(window, {
