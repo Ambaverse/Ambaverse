@@ -389,7 +389,7 @@ function Hero({ palette }) {
 // ===== MARQUEE =====
 function Marquee() {
   const items = [
-    'CONSTRUCTION IN PROGRESS. LAUNCHING ON JUNE 15TH 2026',
+    'CONSTRUCTION IN PROGRESS. LAUNCHING ON JULY 15TH 2026',
   ];
   return (
     <div className="marquee">
