@@ -82,14 +82,13 @@ const PROJECTS = [
 ];
 
 // ===== NAV =====
-function Nav({ theme = 'light', setTheme = () => {} }) {
+function Nav() {
   const [time, setTime] = useState(() => new Date());
   useFx(() => {
     const i = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(i);
   }, []);
   const hhmm = time.toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit', timeZone: 'America/Los_Angeles' });
-  const isDark = theme === 'dark';
   return (
     <nav className="top">
       <div className="brand">
@@ -114,41 +113,6 @@ function Nav({ theme = 'light', setTheme = () => {} }) {
         <li><a href="#about" data-cursor="text">About</a></li>
       </ul>
       <div className="clock">
-        <button
-          type="button"
-          onClick={() => setTheme(t => t === 'dark' ? 'light' : 'dark')}
-          aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-          aria-pressed={isDark}
-          data-cursor="hover"
-          data-cursor-label={isDark ? 'LIGHT' : 'DARK'}
-          style={{
-            width: 28, height: 28, borderRadius: '50%',
-            border: '1.5px solid var(--ink)',
-            background: 'var(--bg)',
-            color: 'var(--ink)',
-            cursor: 'none',
-            padding: 0,
-            display: 'inline-flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            transition: 'background .2s ease, color .2s ease, transform .15s ease',
-          }}
-          onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.92)'}
-          onMouseUp={(e) => e.currentTarget.style.transform = ''}
-          onMouseLeave={(e) => e.currentTarget.style.transform = ''}
-        >
-          {isDark ? (
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <circle cx="12" cy="12" r="4" />
-              <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" />
-            </svg>
-          ) : (
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-            </svg>
-          )}
-        </button>
-        <span aria-hidden="true" style={{ width: 1, height: 18, background: 'var(--ink)', opacity: 0.4 }} />
         <a
           href="https://www.instagram.com/spaciotemporality"
           target="_blank"
@@ -247,7 +211,7 @@ function Hero({ palette }) {
 
       {/* Top-right counter */}
       <div className="hero-counter" style={{ position: 'absolute', top: 96, right: 28, textAlign: 'right', zIndex: 5 }}>
-        <div className="micro">EST. 2024 · UNITED STATES OF AMERICA</div>
+        <div className="micro">UNITED STATES OF AMERICA</div>
         <div className="mono" style={{ fontSize: 11, marginTop: 6, letterSpacing: '0.1em' }}>
           UPTIME / {Math.floor(t)}.{String(Math.floor((t % 1) * 1000)).padStart(3, '0')}s
         </div>
@@ -795,7 +759,6 @@ function AboutContact({ palette }) {
           <div className="num">// SECTION 02 — PROFILE & CONTACT</div>
           <h2>About</h2>
         </div>
-        <div className="micro">EST. 2024</div>
       </div>
 
       <div className="about-grid">
