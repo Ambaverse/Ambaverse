@@ -11,17 +11,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&family=Instrument+Serif:ital@0;1&family=Mukta:wght@400;500;600&display=swap" rel="stylesheet" />
 
 <script>
-  // Apply saved theme before first paint to avoid flash.
-  // Defaults to dark for first-time visitors; user's explicit choice persists.
-  (function () {
-    try {
-      var saved = localStorage.getItem('ambaverse-theme');
-      var theme = (saved === 'light' || saved === 'dark') ? saved : 'dark';
-      document.documentElement.dataset.theme = theme;
-    } catch (e) {
-      document.documentElement.dataset.theme = 'dark';
-    }
-  })();
+  // Dark is the only theme.
+  document.documentElement.dataset.theme = 'dark';
 </script>
 
 <style>

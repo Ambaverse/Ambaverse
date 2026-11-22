@@ -30,19 +30,10 @@ function applyPalette(p) {
   }
 }
 
-// Dark-mode background/foreground overrides. Merged into the active palette
-// when theme==='dark' so BOTH the CSS variables AND the JS-passed palette
-// object (used by canvases like HeroField) reflect the dark theme.
+// Dark-mode background/foreground overrides. Always merged into the active
+// palette so BOTH the CSS variables AND the JS-passed palette object (used by
+// canvases like HeroField) reflect the dark theme. Dark is the only mode.
 const DARK_PATCH = { bg: '#0b0b0e', ink: '#f3efe4', paper: '#16161a' };
-
-function readSavedTheme() {
-  // Defaults to dark for first-time visitors; user's explicit choice persists.
-  try {
-    const saved = localStorage.getItem('ambaverse-theme');
-    if (saved === 'dark' || saved === 'light') return saved;
-    return 'dark';
-  } catch (e) { return 'dark'; }
-}
 
 // Hash router — supports #/, #/digital, #/physical, #/project/<id>
 // Also passes through legacy anchors like #gallery / #about (treated as home).
@@ -62,21 +53,18 @@ function App() {
     "intensity": 1
   }/*EDITMODE-END*/);
 
-  const [theme, setTheme] = React.useState(readSavedTheme);
-
-  // Effective palette: base palette, with dark overrides applied when dark.
+  // Effective palette: base palette, with dark overrides always applied.
   // This single source drives both the CSS variables (via applyPalette) and
   // every component that reads palette.bg / palette.ink / palette.paper.
   const basePalette = PALETTES[t.palette] || PALETTES.acidpop;
-  const palette = theme === 'dark' ? { ...basePalette, ...DARK_PATCH } : basePalette;
+  const palette = { ...basePalette, ...DARK_PATCH };
 
   React.useEffect(() => {
     applyPalette(palette);
-    document.documentElement.dataset.theme = theme;
-    try { localStorage.setItem('ambaverse-theme', theme); } catch (e) {}
+    document.documentElement.dataset.theme = 'dark';
     const grain = document.querySelector('.grain');
     if (grain) grain.style.display = t.showGrain ? 'block' : 'none';
-  }, [t.palette, t.showGrain, theme]);
+  }, [t.palette, t.showGrain]);
 
   // Hash-based route
   const [route, setRoute] = React.useState(() => parseHash(window.location.hash));
@@ -120,7 +108,7 @@ function App() {
 
   return (
     <>
-      <window.Nav theme={theme} setTheme={setTheme} />
+      <window.Nav />
       {!isSubpage && <>
         <window.Hero palette={palette} />
         <window.Marquee />
